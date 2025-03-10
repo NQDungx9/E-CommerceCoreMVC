@@ -1,0 +1,42 @@
+﻿@model IEnumerable<InventoryTransaction>
+
+@{
+    ViewData["Title"] = "Danh sách giao dịch đã duyệt";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Loại giao dịch</th>
+            <th>Ngày duyệt</th>
+            <th>Người duyệt</th>
+            <th>Xuất file</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.TransactionType</td>
+                <td>@item.ApprovedAt?.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@item.ApprovedBy</td>
+                <td>
+                    @if (item.Status == "Approved")
+                    {
+                        <a asp-action="ExportToPdf" asp-route-id="@item.Id" class="btn btn-danger">Xuất PDF</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

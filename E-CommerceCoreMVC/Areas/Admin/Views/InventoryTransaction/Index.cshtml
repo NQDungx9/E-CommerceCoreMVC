@@ -1,0 +1,43 @@
+﻿@model IEnumerable<InventoryTransaction>
+
+@{
+    ViewData["Title"] = "Danh sách giao dịch kho";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Loại giao dịch</th>
+            <th>Trạng thái</th>
+            <th>Ngày tạo</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.TransactionType</td>
+                <td>@item.Status</td>
+                <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    @if (item.Status == "Pending")
+                    {
+                        <form asp-action="Approve" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-success">Duyệt</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

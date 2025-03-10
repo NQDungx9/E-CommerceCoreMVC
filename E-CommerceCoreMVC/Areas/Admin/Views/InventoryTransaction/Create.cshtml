@@ -1,0 +1,35 @@
+﻿@model InventoryTransaction
+
+@{
+    ViewData["Title"] = "Tạo giao dịch nhập/xuất kho";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="ProductId">Sản phẩm</label>
+        <select asp-for="ProductId" class="form-control" required>
+            <option value="">-- Chọn sản phẩm --</option>
+            @foreach (var product in ViewBag.Products)
+            {
+                <option value="@product.Id">@product.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="Quantity">Số lượng</label>
+        <input asp-for="Quantity" type="number" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="TransactionType">Loại giao dịch</label>
+        <select asp-for="TransactionType" class="form-control" required>
+            <option value="Import">Nhập kho</option>
+            <option value="Export">Xuất kho</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
+
+<hr>
